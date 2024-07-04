@@ -76,17 +76,11 @@ const ScreenshotFeed = ({ job, incomingScreenshots }: ScreenshotFeedProps) => {
 
     const channel = pusherRef.current.subscribe(job.id)
 
-    channel.bind('screenshot:added', updateScreenshots)
-    channel.bind('screenshot:prepare', updateScreenshots)
-    channel.bind('screenshot:snap', updateScreenshots)
-    channel.bind('screenshot:patch', updateScreenshots)
+    channel.bind('screenshot', updateScreenshots)
 
     return () => {
       if (pusherRef.current) {
-        channel.unbind('screenshot:added')
-        channel.unbind('screenshot:prepare')
-        channel.unbind('screenshot:snap')
-        channel.unbind('screenshot:patch')
+        channel.unbind('screenshot')
 
         pusherRef.current.unsubscribe(job.id)
         pusherRef.current = null

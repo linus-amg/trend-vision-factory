@@ -47,7 +47,7 @@ const recursiveScrape = async (
 
     await sql`INSERT INTO screenshots (id, job_id, title, status) VALUES (${screenshotId}, ${jobId}, ${pathName}, 0)`
 
-    await pusher.trigger(jobId, 'screenshot:prepare', {
+    await pusher.trigger(jobId, 'screenshot', {
       id: screenshotId,
       status: 0,
       title: pathName,
@@ -73,7 +73,7 @@ const recursiveScrape = async (
     )
 
     await sql`UPDATE screenshots SET status = 1 WHERE id = ${screenshotId} AND job_id = ${jobId}`
-    await pusher.trigger(jobId, 'screenshot:snap', {
+    await pusher.trigger(jobId, 'screenshot', {
       id: screenshotId,
       status: 1,
     })
@@ -99,7 +99,7 @@ const recursiveScrape = async (
     }
 
     await sql`UPDATE screenshots SET status = 2 WHERE id = ${screenshotId} AND job_id = ${jobId}`
-    await pusher.trigger(jobId, 'screenshot:added', { file_path: blob.url, id: screenshotId, status: 2 })
+    await pusher.trigger(jobId, 'screenshot', { file_path: blob.url, id: screenshotId, status: 2 })
 
     screenshots.add(pathName)
 

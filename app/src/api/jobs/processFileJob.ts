@@ -12,7 +12,7 @@ const processFileJob = async (jobId: string, imageFiles: ImageFile[]) => {
 
     // create initial screenshot
     await sql`INSERT INTO screenshots (id, job_id, title, status) VALUES (${screenshotId}, ${jobId}, ${imageFile.fileName}, 0)`
-    await pusher.trigger(jobId, 'screenshot:prepare', {
+    await pusher.trigger(jobId, 'screenshot', {
       id: screenshotId,
       status: 0,
       title: imageFile.fileName,
@@ -34,7 +34,7 @@ const processFileJob = async (jobId: string, imageFiles: ImageFile[]) => {
 
     // update screenshot with image url
     await sql`UPDATE screenshots SET status = 2, file_path = ${blob.url} WHERE id = ${screenshotId} AND job_id = ${jobId}`
-    await pusher.trigger(jobId, 'screenshot:added', {
+    await pusher.trigger(jobId, 'screenshot', {
       id: screenshotId,
       file_path: blob.url,
       status: 2,

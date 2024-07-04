@@ -92,14 +92,14 @@ async function describe(jobId: string, screenshotId: string, screenshotData: Buf
 
     await sql`UPDATE screenshots SET analysis = ${JSON.stringify(analysis)}, status = 3 WHERE id = ${screenshotId}`
 
-    await pusher.trigger(jobId, 'screenshot:patch', {
+    await pusher.trigger(jobId, 'screenshot', {
       id: screenshotId,
       analysis: analysis,
       status: 3,
     })
   } catch (err) {
     await sql`UPDATE screenshots SET status = 4 WHERE id = ${screenshotId}`
-    await pusher.trigger(jobId, 'screenshot:patch', {
+    await pusher.trigger(jobId, 'screenshot', {
       id: screenshotId,
       status: 4,
     })

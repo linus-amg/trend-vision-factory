@@ -46,7 +46,7 @@ async function watchYoutubeVideoAndScrape(jobId: string, videoUrl: string) {
 
       await sql`INSERT INTO screenshots (id, job_id, title, status) VALUES (${screenshotId}, ${jobId}, ${time.toString()}, 0)`
 
-      await pusher.trigger(jobId, 'screenshot:snap', {
+      await pusher.trigger(jobId, 'screenshot', {
         id: screenshotId,
         status: 1,
         title: time.toString(),
@@ -64,7 +64,7 @@ async function watchYoutubeVideoAndScrape(jobId: string, videoUrl: string) {
 
       await sql`UPDATE screenshots SET status = 2, file_path = ${blob.url} WHERE id = ${screenshotId} AND job_id = ${jobId}`
 
-      await pusher.trigger(jobId, 'screenshot:added', {
+      await pusher.trigger(jobId, 'screenshot', {
         id: screenshotId,
         file_path: blob.url,
         status: 2,
