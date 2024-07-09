@@ -1,6 +1,8 @@
 # Visionary
 Submission for Anthropic's "Build with Claude" 2024 contest
 
+<img width="1118" alt="image" src="https://github.com/linus-amg/trend-vision-factory/assets/7453396/c9d4a37d-a7f9-4ab3-b419-dc95c9b7ad81">
+
 ## Description
 Proof of concept for an application which supports it's users in generating testable ideas for their products.
 
